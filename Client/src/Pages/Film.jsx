@@ -99,7 +99,7 @@ const Profile = () => {
                             </tbody>
                         </table>
                         {isAuthenticated && userData.votedMovies.includes(matchedFilm._id) ? (
-                            <Button className="voteBtn" type="primary">Bu Filme Zaten Oy verdin</Button>
+                            <Button danger className="voteBtn" type="primary">Bu Filme Zaten Oy verdin</Button>
                         ) : (
                             <Button className="voteBtn" onClick={OyverMenu} type="primary">Puan ver</Button>
                         )}
