@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(Cookies.get("user_token") || null);
     const [userData, setUserData] = useState(localStorage.getItem("user_data") ? JSON.parse(localStorage.getItem("user_data")) : null);
     const [isAuthenticated, setIsAuthenticated] = useState(!!Cookies.get("user_token"));
-    const [ServerIp, setServerIp] = useState("http://localhost:3000");
+    const [ServerIp, setServerIp] = useState("https://ana-server.onrender.com");
     const [authLoading, setAuthLoading] = useState(true);
     // https://ana-server.onrender.com // http://localhost:3000
 
