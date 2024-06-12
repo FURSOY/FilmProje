@@ -111,7 +111,7 @@ const Profile = () => {
                                 {userData.watchList.includes(matchedFilm._id) ? (
                                     <Button type="primary" className="FilmWatchBtn" onClick={() => onclickWatchFilm(false, matchedFilm.tconst)} danger>İzlenecekler listenden Kaldır</Button>
                                 ) : (
-                                    <Button className="FilmWatchBtn" onClick={() => onclickWatchFilm(true, matchedFilm.tconst)}>İzlenecekler listene Ekle</Button>
+                                    <Button type="primary" className="FilmWatchBtn" onClick={() => onclickWatchFilm(true, matchedFilm.tconst)}>İzlenecekler listene Ekle</Button>
                                 )}
                             </div>
                         )}
