@@ -17,6 +17,8 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
+app.options('*', cors()); // Preflight için izin verir
+
 app.use(express.json());
 
 //! 2) ROUTE
@@ -51,4 +53,3 @@ app.use((err, req, res, next) => {
 app.listen(process.env.PORT, () => {
     console.log('\x1b[31m%s\x1b[0m', `App Running On ${process.env.PORT}`);
 });
-
