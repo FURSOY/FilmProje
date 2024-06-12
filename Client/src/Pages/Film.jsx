@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card, Spin, Button, Rate, message } from "antd";
 import Header from "../Layout/Header.jsx";
 import useFilm from "../Hooks/useFilm.jsx";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../Contexts/AuthContext.jsx";
 import useWatchList from "../Hooks/useWatchList";
 
@@ -101,14 +101,22 @@ const Profile = () => {
                         {isAuthenticated && userData.votedMovies.includes(matchedFilm._id) ? (
                             <Button className="voteBtn" type="primary">Bu Filme Zaten Oy verdin</Button>
                         ) : (
-                            <Button className="voteBtn" onClick={OyverMenu} type="primary">Oy ver</Button>
+                            <Button className="voteBtn" onClick={OyverMenu} type="primary">Puan ver</Button>
                         )}
 
-                        {isAuthenticated && userData.watchList.includes(matchedFilm._id) ? (
-                            <Button className="FilmWatchBtn" onClick={() => onclickWatchFilm(false, matchedFilm.tconst)} danger>İzlenecekler listenden Kaldır</Button>
+                        {!isAuthenticated ? (
+                            <Link to="/login"><Button type="primary">Login</Button></Link>
                         ) : (
-                            <Button className="FilmWatchBtn" onClick={() => onclickWatchFilm(true, matchedFilm.tconst)}>İzlenecekler listene Ekle</Button>
+                            <div>
+                                {userData.watchList.includes(matchedFilm._id) ? (
+                                    <Button type="primary" className="FilmWatchBtn" onClick={() => onclickWatchFilm(false, matchedFilm.tconst)} danger>İzlenecekler listenden Kaldır</Button>
+                                ) : (
+                                    <Button className="FilmWatchBtn" onClick={() => onclickWatchFilm(true, matchedFilm.tconst)}>İzlenecekler listene Ekle</Button>
+                                )}
+                            </div>
                         )}
+
+
                     </div>
                 )}
             </main>
