@@ -16,7 +16,7 @@ const Dashboard = () => {
         <>
             <Header />
             <main>
-                <div className="CardPR">
+                <div className="Card-MYProfile">
                     <Typography.Title strong>Your Profile</Typography.Title>
                     <div style={{ position: 'relative', zIndex: "2" }}>
                         <img alt="userImage" src={userData.avatar} width={"150px"} style={{ userSelect: "none", borderRadius: "50%", zIndex: "2" }} />
@@ -38,6 +38,9 @@ const Dashboard = () => {
                     }
                     <Link to="edit">
                         <Button>Edit</Button>
+                    </Link>
+                    <Link to="watchlist">
+                        <Button>İzlenecekler</Button>
                     </Link>
                     <Button onClick={handleLogout} danger>
                         Logout

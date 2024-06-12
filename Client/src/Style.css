@@ -31,6 +31,7 @@
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #d9d9d9;
+    z-index: 100;
   }
 
   .Logo {
@@ -100,8 +101,6 @@
 
   .SearchDropDownPC.Active {
     display: flex;
-    background: #fff;
-    z-index: 10;
   }
 
   .SearchedBox {
@@ -141,11 +140,26 @@
     align-items: center;
     background: white;
     overflow: auto;
+    z-index: 1;
   }
 
   /*! My profile */
 
-  .CardPR {
+  .Card-MYProfile {
+    background: white;
+    border: #d9d9d9 solid 1px;
+    border-radius: 7px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 450px;
+    height: 700px;
+    z-index: 2;
+  }
+
+  .Card-Film {
     position: relative;
     background: white;
     border: #d9d9d9 solid 1px;
@@ -157,12 +171,12 @@
     align-items: center;
     width: 450px;
     height: 700px;
-    z-index: 1;
+    z-index: 2;
   }
 
   /*! Form */
-  .CardPR-Register,
-  .CardPR-Login {
+  .Card-Register,
+  .Card-Login {
     width: 1000px;
     border: #d9d9d9 1px solid;
     padding: 20px 20px 20px 20px;
@@ -242,7 +256,6 @@
 
 
   .closeBtn {
-
     display: block;
     position: absolute;
     color: white;
@@ -308,6 +321,53 @@
     position: absolute;
     bottom: 5px;
     left: 5px;
+  }
+
+  .FilmWatchBtn {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+  }
+
+  /*! WatchList  !*/
+
+  .Card-WatchList {
+    position: relative;
+    background: white;
+    border: #d9d9d9 solid 1px;
+    border-radius: 7px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 450px;
+    height: 700px;
+    z-index: 2;
+  }
+
+  .watchListBox {
+    position: relative;
+    width: 100%;
+    height: 105px;
+    display: flex;
+    align-items: center;
+    color: black;
+    border-top: #d9d9d9 1px solid;
+    border-bottom: #d9d9d9 1px solid;
+    padding: 5px 5px 5px 5px;
+  }
+
+  .WatchListDeleteButton {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    z-index: 9999;
+  }
+
+  .WatchListLink {
+    color: black;
+    margin-left: 20px;
   }
 }
 

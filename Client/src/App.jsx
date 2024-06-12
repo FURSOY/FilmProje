@@ -14,6 +14,7 @@ import Myprofile from "./Pages/Myprofile";
 import EditProfile from "./Auth/EditProfile";
 import Profile from "./Pages/Profile";
 import Film from "./Pages/Film";
+import WatchList from "./Pages/WatchList";
 import { useAuth } from "./Contexts/AuthContext";
 import Search from "./Pages/Search";
 
@@ -55,6 +56,10 @@ export const App = () => {
         <Route
           path="/myprofile/edit"
           element={isAuthenticated ? <EditProfile /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/myprofile/watchlist"
+          element={isAuthenticated ? <WatchList /> : <Navigate to="/login" />}
         />
         <Route path="/profile/:userId" element={<Profile />} />
         <Route path="/film/:filmId" element={<Film />} />

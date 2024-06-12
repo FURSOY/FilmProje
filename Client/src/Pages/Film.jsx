@@ -4,13 +4,15 @@ import Header from "../Layout/Header.jsx";
 import useFilm from "../Hooks/useFilm.jsx";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../Contexts/AuthContext.jsx";
+import useWatchList from "../Hooks/useWatchList";
 
 const Profile = () => {
-    const { userData } = useAuth();
+    const { userData, isAuthenticated } = useAuth();
     const { matchFilm, matchedFilm, voteMovie } = useFilm();
     const { filmId } = useParams();
     const [loading, setLoading] = useState(true);
     const [showOyver, setshowOyver] = useState(false);
+    const { watchList, WatchListOperation } = useWatchList();
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -37,6 +39,11 @@ const Profile = () => {
         window.location.reload();
     };
 
+    const onclickWatchFilm = async (action, filmId) => {
+        await WatchListOperation(filmId, action)
+        window.location.reload();
+    }
+
     return (
         <>
             <Header />
@@ -46,7 +53,7 @@ const Profile = () => {
                         <Spin />
                     </Card>
                 ) : (
-                    <div className="CardPR">
+                    <div className="Card-Film">
                         <div className={`OyverMenu ${showOyver ? '' : 'hidden'}`}>
                             <h5>Oy vermek için Tıkla</h5>
                             <Rate
@@ -56,7 +63,7 @@ const Profile = () => {
                             />
                         </div>
                         <h1>{matchedFilm.originalTitle}</h1>
-                        <img src={`http://img.omdbapi.com/?apikey=fa0806f5&i=${filmId}`} alt="" />
+                        <img src={`http://img.omdbapi.com/?apikey=fa0806f5&i=${filmId}`} alt="" height={"250px"} />
                         <table className="FilmTable">
                             <tbody>
                                 <tr className="FilmTr">
@@ -91,10 +98,16 @@ const Profile = () => {
                                 </tr>
                             </tbody>
                         </table>
-                        {userData.votedMovies.includes(matchedFilm._id) ? (
+                        {isAuthenticated && userData.votedMovies.includes(matchedFilm._id) ? (
                             <Button className="voteBtn" type="primary">Bu Filme Zaten Oy verdin</Button>
                         ) : (
                             <Button className="voteBtn" onClick={OyverMenu} type="primary">Oy ver</Button>
+                        )}
+
+                        {isAuthenticated && userData.watchList.includes(matchedFilm._id) ? (
+                            <Button className="FilmWatchBtn" onClick={() => onclickWatchFilm(false, matchedFilm.tconst)} danger>İzlenecekler listenden Kaldır</Button>
+                        ) : (
+                            <Button className="FilmWatchBtn" onClick={() => onclickWatchFilm(true, matchedFilm.tconst)}>İzlenecekler listene Ekle</Button>
                         )}
                     </div>
                 )}

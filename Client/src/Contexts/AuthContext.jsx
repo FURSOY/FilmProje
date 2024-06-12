@@ -6,9 +6,10 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(Cookies.get("user_token") || null);
-    const [userData, setUserData] = useState(localStorage.getItem("user_data") || null);
+    const [userData, setUserData] = useState(localStorage.getItem("user_data") ? JSON.parse(localStorage.getItem("user_data")) : null);
     const [isAuthenticated, setIsAuthenticated] = useState(!!Cookies.get("user_token"));
-    const [ServerIp, setServerIp] = useState("https://fursoy-server.onrender.com");
+    const [ServerIp, setServerIp] = useState("http://localhost:3000");
+    const [authLoading, setAuthLoading] = useState(true);
     // https://ana-server.onrender.com // http://localhost:3000
 
     useEffect(() => {
@@ -25,11 +26,15 @@ export const AuthProvider = ({ children }) => {
                     localStorage.setItem("user_data", JSON.stringify(newUserData));
                     setUserData(newUserData);
                     setIsAuthenticated(true);
+                    setAuthLoading(false); // Data successfully loaded
                 })
                 .catch(error => {
                     console.error("Kullanıcı verileri alınamadı:", error);
                     logout();
+                    setAuthLoading(false); // Data load failed
                 });
+        } else {
+            setAuthLoading(false); // No user token, loading finished
         }
     }, [ServerIp]);
 
@@ -66,7 +71,8 @@ export const AuthProvider = ({ children }) => {
                 logout,
                 userData,
                 updateProfileData,
-                ServerIp
+                ServerIp,
+                authLoading
             }}
         >
             {children}

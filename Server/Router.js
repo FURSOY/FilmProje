@@ -15,5 +15,7 @@ router.post('/verificationcode', Controller.verifyOTPCode);
 router.post('/searchfilm', Controller.SearchFilm);
 router.post('/film', Controller.Film);
 router.post('/votefilm', Controller.VoteFilm);
+router.post('/addwatchlist', Controller.addWatchList);
+router.post('/getfilm', Controller.GetFilm);
 
 module.exports = router;

@@ -20,7 +20,7 @@ const Register = () => {
         <>
             <Header />
             <main>
-                <div className='CardPR-Register'>
+                <div className='Card-Register'>
                     <Flex gap='large' align='center'>
                         {/* Form */}
                         <Flex vertical flex={1}>

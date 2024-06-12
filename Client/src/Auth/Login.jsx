@@ -16,7 +16,7 @@ const Login = () => {
         <>
             <Header />
             <main>
-                <Card className='CardPR-Login'>
+                <Card className='Card-Login'>
                     <Flex gap="large" align='center'>
                         <Flex vertical flex={1}>
                             <Typography.Title level={3} strong className='title'>Giriş Yap</Typography.Title>

@@ -58,7 +58,8 @@ exports.signup = async (req, res, next) => {
                 role: newUser.role,
                 avatar: newUser.avatar,
                 verified: newUser.verified,
-                votedMovies: newUser.votedMovies
+                votedMovies: newUser.votedMovies,
+                watchList: newUser.watchlist
             },
         });
     } catch (error) {
@@ -96,7 +97,8 @@ exports.login = async (req, res, next) => {
                 role: user.role,
                 avatar: user.avatar,
                 verified: user.verified,
-                votedMovies: user.votedMovies
+                votedMovies: user.votedMovies,
+                watchList: user.watchlist
             }
         })
     } catch (error) {
@@ -134,7 +136,8 @@ exports.changeProfileData = async (req, res, next) => {
                 role: user.role,
                 avatar: user.avatar,
                 verified: user.verified,
-                votedMovies: user.votedMovies
+                votedMovies: user.votedMovies,
+                watchList: user.watchlist
             }
         });
     } catch (error) {
@@ -223,7 +226,7 @@ exports.Profile = async (req, res, next) => {
                 UserName: matchedUser.name,
                 UserRole: matchedUser.role,
                 UserAvatar: matchedUser.avatar,
-                UserVerified: matchedUser.verified
+                UserVerified: matchedUser.verified,
             });
         }
     } catch (error) {
@@ -330,7 +333,8 @@ exports.verifyOTPCode = async (req, res, next) => {
                 role: user.role,
                 avatar: user.avatar,
                 verified: user.verified,
-                votedMovies: user.votedMovies
+                votedMovies: user.votedMovies,
+                watchList: user.watchlist
             }
         });
     } catch (error) {
@@ -452,7 +456,8 @@ exports.getUserProfile = async (req, res, next) => {
                 role: user.role,
                 avatar: user.avatar,
                 verified: user.verified,
-                votedMovies: user.votedMovies
+                votedMovies: user.votedMovies,
+                watchList: user.watchlist
             },
             message: 'Kullanıcı başarıyla bulundu'
         });
@@ -461,3 +466,92 @@ exports.getUserProfile = async (req, res, next) => {
         res.status(500).json({ message: 'Sunucu hatası' });
     }
 };
+
+exports.addWatchList = async (req, res, next) => {
+    const userId = req.body.userId;
+    const filmId = req.body.filmId;
+    const action = req.body.action;
+
+    try {
+        const user = await User.findById(userId); // await eklendi
+        const film = await MovieModel.findOne({ tconst: filmId });
+
+        if (user && film) {
+            if (action === true) {
+                if (!user.watchlist.includes(film._id)) {
+                    user.watchlist.push(film._id);
+                    await user.save(); // Güncellenen kullanıcıyı kaydet
+                    res.json({
+                        user: {
+                            _id: user._id,
+                            name: user.name,
+                            email: user.email,
+                            role: user.role,
+                            avatar: user.avatar,
+                            verified: user.verified,
+                            votedMovies: user.votedMovies,
+                            watchList: user.watchlist
+                        }, message: "Film kullanıcının watchlistine eklendi"
+                    });
+                } else {
+                    res.json({ message: "Bu film zaten kullanıcının watchlistinde" });
+                }
+            } else {
+                if (user.watchlist.includes(film._id)) {
+                    user.watchlist = user.watchlist.filter(f => f.toString() !== film._id.toString());
+                    await user.save(); // Güncellenen kullanıcıyı kaydet
+                    res.json({
+                        user: {
+                            user: {
+                                _id: user._id,
+                                name: user.name,
+                                email: user.email,
+                                role: user.role,
+                                avatar: user.avatar,
+                                verified: user.verified,
+                                votedMovies: user.votedMovies,
+                                watchList: user.watchlist
+                            }
+                        }, message: "Film kullanıcının watchlistinden kaldırıldı"
+                    });
+                } else {
+                    res.json({ message: "Bu film zaten kullanıcının watchlistinde değil" });
+                }
+            }
+        } else {
+            res.json({ message: "Kullanıcı veya film hatalı" });
+        }
+    } catch (error) {
+        res.json({ message: "Bir sorun oluştu" });
+        console.log(error);
+    }
+};
+
+exports.GetFilm = async (req, res, next) => {
+    const userId = req.body.userId;
+
+    try {
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: 'Kullanıcı bulunamadı' });
+        } else {
+            // Kullanıcının watchlist'indeki film ID'lerini alın
+            const filmIds = user.watchlist;
+
+            // Film ID'lerine göre film detaylarını veritabanından çekin
+            const films = await MovieModel.find({ '_id': { $in: filmIds } });
+
+            // Dönen filmleri JSON olarak yanıtla
+            res.status(200).json(films);
+        }
+
+    } catch (error) {
+        // Hata durumunda uygun bir hata mesajı gönderin
+        console.error('Kullanıcının watchlist\'indeki filmler alınırken bir hata oluştu:', error);
+        res.status(500).json({ message: 'Bir sorun oluştu, lütfen tekrar deneyin' });
+    }
+};
+
+
+
