@@ -17,5 +17,6 @@ router.post('/film', Controller.Film);
 router.post('/votefilm', Controller.VoteFilm);
 router.post('/addwatchlist', Controller.addWatchList);
 router.post('/getfilm', Controller.GetFilm);
+router.get('/getmessages', Controller.GetMessages);
 
 module.exports = router;

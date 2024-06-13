@@ -2,7 +2,8 @@ const fs = require('fs');  // fs modülünü ekleyin
 const path = require('path');  // path modülünü ekleyin
 const User = require('./Models/userModel');
 const OTP = require('./Models/OTPmodel');
-const MovieModel = require('./Models/MovieModel'); // OTP modelini doğru yoldan içe aktarın
+const MovieModel = require('./Models/MovieModel');
+const Message = require('./Models/MessageModel');
 const createError = require('./Utils/appError');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -417,8 +418,15 @@ exports.VoteFilm = async (req, res, next) => {
         await votedFilm.save();
         await user.save();
 
-        // Başarı yanıtı döndür
+        const newMessage = new Message({
+            owner: user._id,
+            content: `${user.name} ${votedFilm.originalTitle} filmine ${rate} puan verdi`,
+        });
+
+        await newMessage.save();
+
         return res.status(200).json({ message: 'Vote recorded successfully' });
+
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Internal Server Error' });
@@ -552,6 +560,18 @@ exports.GetFilm = async (req, res, next) => {
         res.status(500).json({ message: 'Bir sorun oluştu, lütfen tekrar deneyin' });
     }
 };
+
+
+exports.GetMessages = async (req, res, next) => {
+    try {
+        const messages = await Message.find().sort({ createdAt: -1 }); // -1: descending order, 1: ascending order
+        res.status(200).json(messages); // Mesajları döndürmek için yanıt ekleyebilirsiniz
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'An error occurred' });
+    }
+}
+
 
 
 

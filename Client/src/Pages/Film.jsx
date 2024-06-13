@@ -60,6 +60,7 @@ const Profile = () => {
                                 tooltips={['Zaman Kaybı', 'Berbat', 'Kötü', 'Çok Eksiği Var', 'Normal', 'Fena Değil', 'İzlenebilir', 'Çok güzel', 'Mükemmel', 'Efsane']}
                                 onChange={Oyver}
                                 count={10}
+                                className="Rate"
                             />
                         </div>
                         <h1>{matchedFilm.originalTitle}</h1>

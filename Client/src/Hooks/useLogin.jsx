@@ -2,11 +2,14 @@ import { useState } from "react";
 import { message } from "antd";
 import { useAuth } from "../Contexts/AuthContext.jsx";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 const useLogin = () => {
     const { login, ServerIp } = useAuth();
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(null)
+
+    const navigate = useNavigate()
 
     const loginUser = async (values) => {
 
@@ -23,7 +26,8 @@ const useLogin = () => {
 
             if (response.status === 200) {
                 message.success(data.message)
-                login(data.token, data.user)
+                await login(data.token, data.user)
+                navigate("/")
             } else if (response.status === 404) {
                 setError(data.message);
             } else {

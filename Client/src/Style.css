@@ -138,7 +138,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: white;
+    background: #B7B597;
     overflow: auto;
     z-index: 1;
   }
@@ -329,6 +329,17 @@
     right: 5px;
   }
 
+  .Rate {
+    height: 40px;
+    width: 100%;
+  }
+
+  .Rate li {
+    border: none;
+  }
+
+
+
   /*! WatchList  !*/
 
   .Card-WatchList {
@@ -369,6 +380,94 @@
     color: black;
     margin-left: 20px;
   }
+
+  /*! Ana Sayfa !*/
+
+  .AnaSayfaMain {
+    display: grid;
+    background: #B7B597;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 49% 49%;
+    gap: 2%;
+    padding: 20px;
+
+  }
+
+  .OneCıkanlarBox {
+    display: grid;
+    grid-template-rows: 40px 1fr;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    border: #d9d9d9 1px solid;
+    width: 100%;
+    height: 100%;
+    grid-row: 1/2;
+    grid-column: 1/2;
+    background: #fff;
+    border-radius: 7px;
+  }
+
+  .OneCikanlarTitle {
+    font-size: 1rem;
+    grid-column: 1/2;
+    grid-row: 1/2;
+    background: #d9d9d9;
+  }
+
+  .MessageCont {
+    overflow-y: auto;
+    grid-column: 1/2;
+    grid-row: 2/3;
+  }
+
+  .MessageBox {
+    width: 100%;
+    height: 50px;
+    border-top: 1px solid #d9d9d9;
+    border-bottom: 1px solid #d9d9d9;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .WatchListBoxHomepage {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-top: 1px solid #d9d9d9;
+    border-bottom: 1px solid #d9d9d9;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .FriendsRequetsBox {
+    display: grid;
+    grid-template-rows: 40px 1fr;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    border: #d9d9d9 1px solid;
+    width: 100%;
+    height: 100%;
+    grid-row: 1/2;
+    grid-column: 3/4;
+    background: #fff;
+    border-radius: 7px;
+  }
+
+  .WatchListBox {
+    display: grid;
+    grid-template-rows: 40px 1fr;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    border: #d9d9d9 1px solid;
+    width: 100%;
+    height: 100%;
+    grid-row: 1/2;
+    grid-column: 4/5;
+    background: #fff;
+    border-radius: 7px;
+  }
 }
 
 .hidden {
@@ -383,7 +482,7 @@
 
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background: white;
+  background: black;
 }
 
 .Loading {

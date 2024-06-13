@@ -11,11 +11,7 @@ const app = express();
 
 //! 1) MIDDLEWARES
 
-app.use(cors({
-    origin: 'https://fursoy.vercel.app', // İzin verilecek domain
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(cors({}));
 
 app.options('*', cors()); // Preflight için izin verir
 
