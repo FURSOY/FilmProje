@@ -49,7 +49,7 @@ const Dashboard = () => {
         <>
             <Header />
             <main>
-                <div className="CardPR">
+                <div className="Card-MYProfile">
                     <Flex vertical gap="small" align="center">
                         <h1 >Your Profile</h1>
                         <Form
@@ -106,7 +106,7 @@ const Dashboard = () => {
                             </Form.Item>
                             <Form.Item className="EditProfileInput">
                                 <Button className="EditProfileSubmitBtn" type="primary" htmlType="submit">
-                                    Save
+                                    Kaydet
                                 </Button>
                             </Form.Item>
                         </Form>

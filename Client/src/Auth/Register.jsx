@@ -25,20 +25,17 @@ const Register = () => {
                         {/* Form */}
                         <Flex vertical flex={1}>
                             <Typography.Title level={3} strong className='title'>
-                                Create An Account
+                                Hesap Oluştur
                             </Typography.Title>
-                            <Typography.Text type='secondary' strong className='slogan'>
-                                Join For Exclusive Access!
-                            </Typography.Text>
                             <Form layout='vertical' onFinish={handleRegister} autoComplete='off'>
                                 <Form.Item
-                                    label='User Name'
+                                    label='Kullanıcı Adı'
                                     name='name'
                                     rules={[{ required: true, message: 'Please enter your user name.' }]}>
                                     <Input placeholder='User Name' />
                                 </Form.Item>
                                 <Form.Item
-                                    label='Email'
+                                    label='E-Posta'
                                     name='email'
                                     rules={[
                                         { required: true, message: 'Please enter your email address.' },
@@ -47,13 +44,13 @@ const Register = () => {
                                     <Input placeholder='Email' />
                                 </Form.Item>
                                 <Form.Item
-                                    label='Password'
+                                    label='Şifre'
                                     name='password'
                                     rules={[{ required: true, message: 'Please enter your password.' }]}>
                                     <Input.Password placeholder='Password' />
                                 </Form.Item>
                                 <Form.Item
-                                    label='Password Confirm'
+                                    label='Şifre Doğrula'
                                     name='passwordConfirm'
                                     dependencies={['password']}
                                     rules={[
@@ -75,13 +72,13 @@ const Register = () => {
 
                                 <Form.Item>
                                     <Button type='primary' htmlType='submit' size='large' className='btn'>
-                                        {loading ? <Spin /> : 'Create Account'}
+                                        {loading ? <Spin /> : 'Hesap Oluştur'}
                                     </Button>
                                 </Form.Item>
                                 <Form.Item>
                                     <Link to='/login'>
-                                        <Button size='large' className='btn'>
-                                            Sign In
+                                        <Button size='large' className='btn'  >
+                                            Zaten Hesabım Var. Giriş Yap
                                         </Button>
                                     </Link>
                                 </Form.Item>

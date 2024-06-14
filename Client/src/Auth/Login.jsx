@@ -20,7 +20,6 @@ const Login = () => {
                     <Flex gap="large" align='center'>
                         <Flex vertical flex={1}>
                             <Typography.Title level={3} strong className='title'>Giriş Yap</Typography.Title>
-                            <Typography.Text type='secondary' strong className='slogan'>Mutlu olucaksın</Typography.Text>
                             <Form layout='vertical' onFinish={handleLogin} autoComplete='off'>
                                 <Form.Item label="Email" name="email" rules={[{
                                     required: true,

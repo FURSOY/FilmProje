@@ -12,7 +12,7 @@ const Profile = () => {
     const { filmId } = useParams();
     const [loading, setLoading] = useState(true);
     const [showOyver, setshowOyver] = useState(false);
-    const { watchList, WatchListOperation } = useWatchList();
+    const { watchList, WatchListOperation, WatchedListOperation } = useWatchList();
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -36,6 +36,9 @@ const Profile = () => {
     const Oyver = async (value) => {
         console.log(value);
         await voteMovie(value, filmId, userData._id);
+        if (!userData.watchedList.includes(matchedFilm._id)) {
+            await WatchedListOperation(filmId, true)
+        }
         window.location.reload();
     };
 
@@ -102,18 +105,24 @@ const Profile = () => {
                         {isAuthenticated && userData.votedMovies.includes(matchedFilm._id) ? (
                             <Button danger className="voteBtn" type="primary">Bu Filme Zaten Oy verdin</Button>
                         ) : (
-                            <Button className="voteBtn" onClick={OyverMenu} type="primary">Puan ver</Button>
+                            userData.watchedList.includes(matchedFilm._id) ? (<Button className="voteBtn" onClick={OyverMenu} type="primary">Puan ver</Button>) :
+                                (<Button className="voteBtn" onClick={OyverMenu} type="primary">İzledim ve Puan ver</Button>)
                         )}
 
                         {!isAuthenticated ? (
                             <Link to="/login"><Button type="primary">Login</Button></Link>
                         ) : (
                             <div>
-                                {userData.watchList.includes(matchedFilm._id) ? (
-                                    <Button type="primary" className="FilmWatchBtn" onClick={() => onclickWatchFilm(false, matchedFilm.tconst)} danger>İzlenecekler listenden Kaldır</Button>
+                                {userData.watchedList.includes(matchedFilm._id) ? (
+                                    ''
                                 ) : (
-                                    <Button type="primary" className="FilmWatchBtn" onClick={() => onclickWatchFilm(true, matchedFilm.tconst)}>İzlenecekler listene Ekle</Button>
-                                )}
+                                    userData.watchList.includes(matchedFilm._id) ? (
+                                        <Button type="primary" className="FilmWatchBtn" onClick={() => onclickWatchFilm(false, matchedFilm.tconst)} danger>İzlenecekler listenden Kaldır</Button>
+                                    ) : (
+                                        <Button type="primary" className="FilmWatchBtn" onClick={() => onclickWatchFilm(true, matchedFilm.tconst)}>İzlenecekler listene Ekle</Button>
+                                    )
+                                )
+                                }
                             </div>
                         )}
 

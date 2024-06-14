@@ -35,6 +35,11 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Movie',
         type: Array
+    },
+    watchedlist: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Movie',
+        type: Array
     }
 }, {
     timestamps: true

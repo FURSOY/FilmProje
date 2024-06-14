@@ -6,7 +6,14 @@ const MessageSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    content: {
+    movie: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Movie',
+    },
+    rate: {
+        type: Number
+    },
+    type: {
         type: String,
         required: true
     },

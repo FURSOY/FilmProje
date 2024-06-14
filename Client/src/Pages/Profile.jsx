@@ -32,16 +32,16 @@ const Profile = () => {
                         <Flex vertical gap="small" align="center">
                             <Typography.Title strong>Profile</Typography.Title>
                             <div style={{ position: 'relative' }}>
-                                <img alt="userImage" src={matchedUser.UserAvatar} width={"150px"} style={{ userSelect: "none", borderRadius: "50%" }} />
+                                <img alt="userImage" src={matchedUser.avatar} width={"150px"} style={{ userSelect: "none", borderRadius: "50%" }} />
                                 {
                                     matchedUser.UserVerified === true ? <img className="verifiedLogo" src="/tick.png" /> : ''
                                 }
                             </div>
                             <Typography.Title level={2} strong>
-                                {matchedUser.UserName}
+                                {matchedUser.name}
                             </Typography.Title>
                             <Typography.Text level={2} type="primary" strong>
-                                {matchedUser.UserRole}
+                                {matchedUser.role}
                             </Typography.Text>
                         </Flex>
                     </Card>

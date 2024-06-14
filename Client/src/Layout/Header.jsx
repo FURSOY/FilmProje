@@ -111,9 +111,6 @@ const Header = () => {
                 <li>
                     <Link to="/" className="PCNav"><HomeOutlined /></Link>
                 </li>
-                <li>
-                    <Link to="/" className="PCNav"><MessageOutlined /></Link>
-                </li>
                 {isAuthenticated && userData.role === "admin" && (
                     <li>
                         <Link to="/admin" className="PCNav"><ProductOutlined /></Link>
@@ -123,7 +120,7 @@ const Header = () => {
                     {isAuthenticated ? (
                         <Link to="/myprofile"><Avatar src={userData.avatar} /></Link>
                     ) : (
-                        <Link to="/login"><Button>Login</Button></Link>
+                        <Link to="/login"><Button>Giriş Yap</Button></Link>
                     )}
                 </li>
             </ul>

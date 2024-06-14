@@ -9,7 +9,7 @@ const useProfile = () => {
 
     const matchProfile = async (userId) => {
         try {
-            const response = await axios.post(`${ServerIp}/api/profile`, { userId });
+            const response = await axios.post(`${ServerIp}/api/getuser`, { userId });
             setMatchedUser(response.data);
             message.success("Kullanıcı bulundu");
         } catch (error) {
