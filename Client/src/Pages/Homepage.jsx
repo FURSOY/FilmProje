@@ -16,15 +16,25 @@ const Homepage = () => {
         return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()} ${date.getHours()}:${('0' + date.getMinutes()).slice(-2)}`;
     };
 
+    const contentStyle = {
+        padding: 50,
+        background: 'rgba(0, 0, 0, 0.05)',
+        borderRadius: 4,
+    };
+
+    const content = <div style={contentStyle} />;
+
     return (
         <>
             <Header />
             <main className='AnaSayfaMain'>
                 <div className='OneCıkanlarBox'>
                     <h1 className='OneCikanlarTitle'>Öne Çıkanlar</h1>
-                    <div className='MessageCont'>
+                    <div className={`MessageCont ${loading ? 'centerLoading' : ''}`}>
                         {loading ? (
-                            <Spin />
+                            <Spin tip="Yükleniyor..." className='SearchLoading' size="large">
+                                {content}
+                            </Spin>
                         ) : (
                             (Messages === null || Messages.length === 0) ? (
                                 <Typography.Paragraph>No messages found.</Typography.Paragraph>

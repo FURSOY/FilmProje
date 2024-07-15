@@ -18,7 +18,6 @@ const Dashboard = () => {
                 throw new Error('Please upload and crop an avatar');
             }
             await changeProfileData({ ...values, updatedAvatar: preview });
-            console.log({ ...values, updatedAvatar: preview });
         } catch (error) {
             console.error('Error updating profile:', error.message);
         }

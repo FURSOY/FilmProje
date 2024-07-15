@@ -511,7 +511,16 @@ exports.addWatchList = async (req, res, next) => {
 
             if (!user.watchlist.includes(film._id)) {
                 user.watchlist.unshift(film._id);
-                await user.save(); // Güncellenen kullanıcıyı kaydet
+                await user.save();
+
+                const newMessage = new Message({
+                    owner: user._id,
+                    movie: votedFilm._id,
+                    type: "addwatchmovie",
+                });
+
+                await newMessage.save()
+
                 return res.status(200).json({
                     user: {
                         _id: user._id,
@@ -735,3 +744,14 @@ exports.GetFilmById = async (req, res, next) => {
 
 
 
+exports.denme = async (req, res, next) => {
+    console.log("çalıştı");
+    const gelendeger = req.body.text;
+
+    if (gelendeger === "lal") {
+        return res.status(200).json("lalllalal")
+    }
+    if (gelendeger === "pro") {
+        return res.status(200).json("prossss")
+    }
+}

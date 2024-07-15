@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
         } else {
             setAuthLoading(false); // No user token, loading finished
         }
-    }, [ServerIp]);
+    }, []); // Only run on mount and unmount
 
     const login = (newToken, newData) => {
         // Cookie'yi HttpOnly ve Secure olarak ayarlayarak kaydet

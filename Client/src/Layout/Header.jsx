@@ -67,6 +67,14 @@ const Header = () => {
         setSearchActive(!searchActive);
     };
 
+    const contentStyle = {
+        padding: 50,
+        background: 'rgba(0, 0, 0, 0.05)',
+        borderRadius: 4,
+    };
+
+    const content = <div style={contentStyle} />;
+
     return (
         <header className={`${searchActive ? 'HeaderMobilSearch' : ''}`}>
             <Link className={`Logo ${searchActive ? 'hidden' : ''}`} to="/"><h1>FİLM PROJESİ</h1></Link>
@@ -81,9 +89,11 @@ const Header = () => {
                     onBlur={handleBlur}
                     onSearch={handleSearchPage}
                 />
-                <div className={`SearchDropDownPC ${showDropdown ? 'Active' : ''}`} onMouseDown={() => setLinkClicked(true)}>
+                <div className={`SearchDropDownPC ${showDropdown ? 'Active' : ''} ${searchLoading ? 'centerLoading' : ''} `} onMouseDown={() => setLinkClicked(true)}>
                     {searchLoading ? (
-                        <Spin className='Loading' size='large' />
+                        <Spin tip="Yükleniyor..." className='SearchLoading' size="large">
+                            {content}
+                        </Spin>
                     ) : matchedFilms.length === 0 ? (
                         <div className="searchedCard">Film bulunamadı</div>
                     ) : (

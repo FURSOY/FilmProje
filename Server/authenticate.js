@@ -9,8 +9,8 @@ const authenticate = async (req, res, next) => {
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET); // JWT'yi doğrulayın
-        req.user = await User.findById(decoded.id); // Kullanıcıyı bulun
+        const decoded = jwt.verify(token, "secretkey123"); // JWT'yi doğrulayın
+        req.user = await User.findById(decoded._id); // Kullanıcıyı bulun
 
         if (!req.user) {
             return res.status(401).json({ message: 'Kullanıcı bulunamadı' });

@@ -8,7 +8,7 @@ router.post('/signup', Controller.signup);
 router.post('/delete', Controller.deleteUser);
 router.post('/login', Controller.login);
 router.post('/changeprofiledata', Controller.changeProfileData);
-router.get('/user/profile', Controller.getUserProfile);
+router.get('/user/profile', authenticate, Controller.getUserProfile);
 router.post('/getuser', Controller.getUser);
 router.post('/search', Controller.SearchProfile);
 router.post('/createverify', Controller.createVerifyCode);
@@ -22,5 +22,6 @@ router.post('/getfilm', Controller.GetFilmById); // POST metodunu GetFilmById il
 router.get('/getmessages', Controller.GetMessages);
 router.post('/getwatchlist', Controller.GetUserWatchFilm);
 router.post('/getwatchedlist', Controller.GetUserWatchedFilm);
+router.post('/denme', Controller.denme);
 
 module.exports = router;

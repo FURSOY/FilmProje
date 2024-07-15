@@ -31,14 +31,24 @@ const Search = () => {
         fetchSearchResults();
     }, [searchedFilm, ServerIp]);
 
+    const contentStyle = {
+        padding: 50,
+        background: 'rgba(0, 0, 0, 0.05)',
+        borderRadius: 4,
+    };
+
+    const content = <div style={contentStyle} />;
+
     return (
         <>
             <Header />
             <main className='SearchMain'>
-                <div className='SearchBox'>
+                <div className={`SearchBox ${loading ? 'centerLoading' : ''}`}>
                     <Typography.Text style={{ display: `${loading ? 'none' : 'block'}` }}>Arama Sonuçları: "{searchedFilm}"</Typography.Text>
                     {loading ? (
-                        <Spin />
+                        <Spin tip="Yükleniyor..." className='SearchLoading' size="large">
+                            {content}
+                        </Spin>
                     ) : searchResults && searchResults.length === 0 ? (
                         <div className='404BoxSearch'>Film bulunamadı</div>
                     ) : (
