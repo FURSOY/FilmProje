@@ -1,14 +1,12 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, Image, ScrollView, Button } from 'react-native';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import useHome from '../Hooks/useHome';
-import { useAuth } from "../Contexts/AuthContext";
 import { useFocusEffect } from '@react-navigation/native';
 
 const Home = () => {
-  const { isAuthenticated } = useAuth();
   const { Messages, loading, refreshMessages } = useHome();
 
   useFocusEffect(
@@ -91,7 +89,7 @@ const Home = () => {
         </View>
       </View>
       <Footer />
-    </SafeAreaView>
+    </SafeAreaView >
   );
 }
 

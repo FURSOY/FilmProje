@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, SafeAreaView, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, View, Text, TextInput, SafeAreaView, TouchableOpacity, Image, StatusBar } from 'react-native';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useAuth } from "../Contexts/AuthContext";
@@ -7,7 +7,6 @@ import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Picker } from '@react-native-picker/picker';
-import { showMessage } from "react-native-flash-message";
 import useUpdateProfileData from "../Hooks/useUpdateProfileData";
 import * as ImagePicker from 'expo-image-picker';
 
@@ -66,9 +65,8 @@ const Editprofile = () => {
                         onSubmit={async (values) => {
                             try {
                                 await changeProfileData(values);
-                                showMessage({ message: "Profil başarıyla güncellendi", type: "success" });
                             } catch (error) {
-                                showMessage({ message: error.message, type: "danger" });
+                                console.log(error);
                             }
                         }}
                     >
@@ -131,7 +129,7 @@ const Editprofile = () => {
                 )}
             </View>
             <Footer />
-        </SafeAreaView>
+        </SafeAreaView >
     );
 };
 
@@ -150,7 +148,7 @@ const styles = StyleSheet.create({
     },
     Box: {
         width: 350,
-        height: 500,
+        height: 460,
         backgroundColor: '#fff',
         borderRadius: 15,
         justifyContent: 'center',

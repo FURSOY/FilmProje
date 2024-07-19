@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { showMessage } from "react-native-flash-message";
 import { useAuth } from "../Contexts/AuthContext";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
@@ -34,19 +33,18 @@ const useUpdateProfileData = () => {
             const newData = response.data;
             await updateProfileData(newData.user);
             setLoading(false);
-            showMessage({
-                message: "Profile data changed successfully",
-                type: "success",
-                duration: 3000,
+            Toast.show({
+                type: 'success',
+                text1: "Profiliniz Güncellendi",
+                text2: "Profiliniz Başarıyla Güncellendi"
             });
             navigation.navigate("myprofile");
         } catch (error) {
             setLoading(false);
             setError(error);
-            showMessage({
-                message: "Error changing profile data",
-                type: "danger",
-                duration: 3000,
+            Toast.show({
+                type: 'error',
+                text1: "Profilinizi Güncellerken Bir Hata Oluştu",
             });
             console.error("Error in changeProfileData:", error);
         }

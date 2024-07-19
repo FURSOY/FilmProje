@@ -1,7 +1,7 @@
-import { useState, useEffect, act } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useAuth } from "../Contexts/AuthContext.jsx";
-import { message } from 'antd';
+import Toast from 'react-native-toast-message';
+import { useAuth } from '../Contexts/AuthContext';
 
 const useWatchList = () => {
     const [watchList, setWatchList] = useState([]);
@@ -33,20 +33,41 @@ const useWatchList = () => {
 
         if (!authLoading && userData && userData._id) {
             fetchWatchList(userData._id);
-            fetchWatchedList(userData._id)
+            fetchWatchedList(userData._id);
         }
     }, [authLoading, userData, ServerIp]);
 
     const WatchListOperation = async (filmId, action) => {
-        console.log(action);
-        await axios.post(`${ServerIp}/api/addwatchlist`, { userId: userData._id, filmId: filmId, action: action });
-        window.location.reload();
-    }
+        try {
+            const response = await axios.post(`${ServerIp}/api/addwatchlist`, { userId: userData._id, filmId, action });
+            Toast.show({
+                type: 'success',
+                text1: response.data.message,
+            });
+        } catch (error) {
+            console.error('WatchList operation error:', error);
+            Toast.show({
+                type: 'error',
+                text1: 'Operation failed',
+            });
+        }
+    };
 
     const WatchedListOperation = async (filmId, action) => {
-        console.log(action);
-        await axios.post(`${ServerIp}/api/addwatchedlist`, { userId: userData._id, filmId, action });
-    }
+        try {
+            const response = await axios.post(`${ServerIp}/api/addwatchedlist`, { userId: userData._id, filmId, action });
+            Toast.show({
+                type: 'success',
+                text1: response.data.message,
+            });
+        } catch (error) {
+            console.error('WatchedList operation error:', error);
+            Toast.show({
+                type: 'error',
+                text1: 'Operation failed',
+            });
+        }
+    };
 
     return { watchedList, watchList, loading, WatchListOperation, WatchedListOperation };
 };

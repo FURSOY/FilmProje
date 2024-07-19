@@ -37,15 +37,15 @@ const Profile = () => {
         console.log(value);
         await voteMovie(value, filmId, userData._id);
         if (!userData.watchedList.includes(matchedFilm._id)) {
-            await WatchedListOperation(filmId, true)
+            await WatchedListOperation(filmId, true);
         }
         window.location.reload();
     };
 
     const onclickWatchFilm = async (action, filmId) => {
-        await WatchListOperation(filmId, action)
+        await WatchListOperation(filmId, action);
         window.location.reload();
-    }
+    };
 
     return (
         <>
@@ -105,8 +105,11 @@ const Profile = () => {
                         {isAuthenticated && userData.votedMovies.includes(matchedFilm._id) ? (
                             <Button danger className="voteBtn" type="primary">Bu Filme Zaten Oy verdin</Button>
                         ) : (
-                            userData.watchedList.includes(matchedFilm._id) ? (<Button className="voteBtn" onClick={OyverMenu} type="primary">Puan ver</Button>) :
-                                (<Button className="voteBtn" onClick={OyverMenu} type="primary">İzledim ve Puan ver</Button>)
+                            userData.watchedList.includes(matchedFilm._id) ? (
+                                <Button className="voteBtn" onClick={OyverMenu} type="primary">Puan ver</Button>
+                            ) : (
+                                <Button className="voteBtn" onClick={OyverMenu} type="primary">İzledim ve Puan ver</Button>
+                            )
                         )}
 
                         {!isAuthenticated ? (
@@ -121,12 +124,9 @@ const Profile = () => {
                                     ) : (
                                         <Button type="primary" className="FilmWatchBtn" onClick={() => onclickWatchFilm(true, matchedFilm.tconst)}>İzlenecekler listene Ekle</Button>
                                     )
-                                )
-                                }
+                                )}
                             </div>
                         )}
-
-
                     </div>
                 )}
             </main>

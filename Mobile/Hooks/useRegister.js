@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { showMessage } from "react-native-flash-message";
 import { useAuth } from "../Contexts/AuthContext";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import Toast from 'react-native-toast-message';
 
 const useRegister = () => {
     const { login, ServerIp } = useAuth();
@@ -27,25 +27,28 @@ const useRegister = () => {
 
             const data = response.data;
             if (response.status === 201) {
-                showMessage({
-                    message: data.message,
-                    type: "success",
+                Toast.show({
+                    type: 'error',
+                    text1: data.message,
+                    text2: 'Hesap Başarıyla Oluşturuldu'
                 });
                 login(data.token, data.user);
                 navigation.navigate("home");
             } else if (response.status === 400) {
                 setError(data.message);
             } else {
-                showMessage({
-                    message: "Kayıt Başarısız",
-                    type: "danger",
+                Toast.show({
+                    type: 'error',
+                    text1: 'Hesap OLuşturulamadı',
+                    text2: 'Hesap Oluşturulurken Bir Hatayla Karşılaşıldı'
                 });
             }
         } catch (error) {
             console.log(error);
-            showMessage({
-                message: error.response.data.message,
-                type: "danger",
+            Toast.show({
+                type: 'error',
+                text1: 'Hesap OLuşturulamadı',
+                text2: 'Hesap Oluşturulurken Bir Hatayla Karşılaşıldı'
             });
         } finally {
             setLoading(false);

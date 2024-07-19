@@ -491,75 +491,51 @@ exports.getUserProfile = async (req, res, next) => {
 };
 
 exports.addWatchList = async (req, res, next) => {
-    const userId = req.body.userId;
-    const filmId = req.body.filmId;
-    const action = req.body.action;
+    const { userId, filmId, action } = req.body;
 
     try {
+        // Kullanıcı ve film verilerini al
         const user = await User.findById(userId);
         const film = await MovieModel.findOne({ tconst: filmId });
 
+        // Kullanıcı veya film bulunamadığında hata dön
         if (!user || !film) {
             return res.status(404).json({ message: "Kullanıcı veya film bulunamadı" });
         }
 
-        if (action === true) {
+        // İzlenecekler listesine ekleme işlemi
+        if (action) {
+            // Film zaten izlendi listesinde ise hata döndür
             if (user.watchedlist.includes(film._id)) {
                 return res.status(400).json({ message: "Bu film İzlenmişler Listesinde" });
             }
 
+            // Film zaten watchlistede ise bilgi mesajı döndür
             if (!user.watchlist.includes(film._id)) {
                 user.watchlist.unshift(film._id);
                 await user.save();
-
-                const newMessage = new Message({
-                    owner: user._id,
-                    movie: votedFilm._id,
-                    type: "addwatchmovie",
-                });
-
-                await newMessage.save()
-
                 return res.status(200).json({
-                    user: {
-                        _id: user._id,
-                        name: user.name,
-                        email: user.email,
-                        role: user.role,
-                        avatar: user.avatar,
-                        verified: user.verified,
-                        votedMovies: user.votedMovies,
-                        watchList: user.watchlist,
-                        watchedList: user.watchedlist
-                    },
-                    message: "Film kullanıcının watchlistine eklendi"
+                    message: "Film Kullanıcının İzlenecekler Listesine Eklendi"
                 });
+            } else {
+                return res.status(200).json({ message: "Film zaten watchlistede" });
             }
-        } else {
+        } else { // İzlenecekler listeden çıkarma işlemi
             if (!user.watchlist.includes(film._id)) {
                 return res.status(400).json({ message: "Bu film zaten kullanıcının watchlistinde değil" });
             }
 
-            user.watchlist = user.watchlist.filter(f => f.toString() !== film._id.toString());
-            await user.save(); // Güncellenen kullanıcıyı kaydet
+            // Film watchlisteden çıkar
+            user.watchlist = user.watchlist.filter(f => !f.equals(film._id));
+            await user.save();
             return res.status(200).json({
-                user: {
-                    _id: user._id,
-                    name: user.name,
-                    email: user.email,
-                    role: user.role,
-                    avatar: user.avatar,
-                    verified: user.verified,
-                    votedMovies: user.votedMovies,
-                    watchList: user.watchlist,
-                    watchedList: user.watchedlist
-                },
                 message: "Film kullanıcının watchlistinden kaldırıldı"
             });
         }
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "Bir sorun oluştu" });
+        // Hata durumunda daha açıklayıcı bir mesaj döndür
+        console.error('Error in addWatchList:', error);
+        res.status(500).json({ message: "Bir sorun oluştu", error: error.message });
     }
 };
 
@@ -581,17 +557,6 @@ exports.addWatchedList = async (req, res, next) => {
                 await user.save();
 
                 return res.json({
-                    user: {
-                        _id: user._id,
-                        name: user.name,
-                        email: user.email,
-                        role: user.role,
-                        avatar: user.avatar,
-                        verified: user.verified,
-                        votedMovies: user.votedMovies,
-                        watchList: user.watchlist,
-                        watchedList: user.watchedlist
-                    },
                     message: "Film kullanıcının watchedlistine eklendi"
                 });
             } else {
@@ -603,17 +568,6 @@ exports.addWatchedList = async (req, res, next) => {
                 await user.save();
 
                 return res.json({
-                    user: {
-                        _id: user._id,
-                        name: user.name,
-                        email: user.email,
-                        role: user.role,
-                        avatar: user.avatar,
-                        verified: user.verified,
-                        votedMovies: user.votedMovies,
-                        watchList: user.watchlist,
-                        watchedList: user.watchedlist
-                    },
                     message: "Film kullanıcının watchedlistinden kaldırıldı"
                 });
             } else {

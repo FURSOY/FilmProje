@@ -45,7 +45,7 @@ const Navigator = () => {
                     animation: 'slide_from_bottom'
                 }} />
             )}
-            <Stack.Screen name="WatchedList" component={WatchedList} options={{
+            <Stack.Screen name="watchedlist" component={WatchedList} options={{
                 headerShown: false,
                 animation: 'slide_from_left'
             }} />

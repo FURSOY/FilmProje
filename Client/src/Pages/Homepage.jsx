@@ -112,7 +112,6 @@ const Homepage = () => {
                                     style={{ width: "40px", height: "40px" }}
                                     onClick={async () => {
                                         await WatchListOperation(film.tconst, false);
-                                        window.location.reload(); // Refreshes the page after removing from watchlist
                                     }}
                                     className="WatchListDeleteButton"
                                     type='primary'

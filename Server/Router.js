@@ -22,6 +22,5 @@ router.post('/getfilm', Controller.GetFilmById); // POST metodunu GetFilmById il
 router.get('/getmessages', Controller.GetMessages);
 router.post('/getwatchlist', Controller.GetUserWatchFilm);
 router.post('/getwatchedlist', Controller.GetUserWatchedFilm);
-router.post('/denme', Controller.denme);
 
 module.exports = router;

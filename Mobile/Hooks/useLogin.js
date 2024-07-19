@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Alert } from "react-native";
 import { useAuth } from "../Contexts/AuthContext";
 import { useNavigation } from "@react-navigation/native";
-import { showMessage } from "react-native-flash-message";
+import Toast from 'react-native-toast-message';
 
 const useLogin = () => {
     const { login, ServerIp } = useAuth();
@@ -27,18 +27,18 @@ const useLogin = () => {
             const data = await response.json();
 
             if (response.status === 200) {
-                showMessage({
-                    message: data.message,
-                    type: "success",
+                Toast.show({
+                    type: 'success',
+                    text1: data.message,
                 });
                 await login(data.token, data.user);
                 navigation.navigate("home"); // Navigasyonunuzun doğru olduğundan emin olun
             } else if (response.status === 404) {
                 setError(data.message);
             } else {
-                showMessage({
-                    message: "Giriş Yaparken Bir Sorun Oluştu.",
-                    type: "error",
+                Toast.show({
+                    type: 'error',
+                    text1: data.message,
                 });
             }
         } catch (error) {

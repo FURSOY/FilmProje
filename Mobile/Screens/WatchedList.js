@@ -7,7 +7,7 @@ import useHome from '../Hooks/useHome';
 import { useAuth } from "../Contexts/AuthContext";
 import { useFocusEffect } from '@react-navigation/native';
 
-const Home = () => {
+const WatchedList = () => {
   const { isAuthenticated } = useAuth();
   const { Messages, loading, refreshMessages } = useHome();
 
@@ -148,4 +148,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default WatchedList;

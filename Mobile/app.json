@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "fursoy",
-    "slug": "dsad",
+    "slug": "fursoy",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -29,10 +29,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#fff"
-      }
+      },
+      "package": "com.dneme.com"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "055633ba-0d64-4eab-80dc-d1b7a7b449ad"
+      }
     }
   }
 }

@@ -8,7 +8,7 @@ const Footer = () => {
 
     return (
         <View style={styles.footer}>
-            <TouchableOpacity onPress={() => navigation.navigate("WatchedList")} style={styles.button}>
+            <TouchableOpacity onPress={() => navigation.navigate("watchedlist")} style={styles.button}>
                 <FontAwesome6 name="list-check" size={24} color="black" />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate("home")} style={styles.button}>
