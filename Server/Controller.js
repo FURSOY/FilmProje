@@ -231,7 +231,6 @@ exports.Profile = async (req, res, next) => {
         const matchedUser = await User.findById(userId);
 
         if (!matchedUser) {
-            console.log("Kullanıcı bulunamadı");
             return res.status(404).json({ message: 'Kullanıcı Bulunamadı' });
         } else {
             return res.status(200).json({
@@ -714,14 +713,12 @@ exports.GetFilmById = async (req, res, next) => {
 
         if (!filmId) {
             return res.status(400).json({ error: 'Film ID is required' });
-            console.log("400");
         }
 
         const film = await MovieModel.findById(filmId);
 
         if (!film) {
             return res.status(404).json({ message: 'Film not found' });
-            console.log("404");
         }
 
         res.status(200).json(film);
@@ -730,28 +727,3 @@ exports.GetFilmById = async (req, res, next) => {
         res.status(500).json({ error: 'An error occurred' });
     }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-exports.denme = async (req, res, next) => {
-    console.log("çalıştı");
-    const gelendeger = req.body.text;
-
-    if (gelendeger === "lal") {
-        return res.status(200).json("lalllalal")
-    }
-    if (gelendeger === "pro") {
-        return res.status(200).json("prossss")
-    }
-}

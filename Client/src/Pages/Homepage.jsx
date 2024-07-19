@@ -42,7 +42,7 @@ const Homepage = () => {
                                 Messages.map((message, index) => (
                                     <div key={index} className='MessageBox'>
                                         <Link className='imgLink' to={`/profile/${message.owner}`}>
-                                            <img style={{ paddingRight: "5px" }} src={message.userInfo.avatar} alt="User Avatar" width={"35px"} height={"35px"} />
+                                            <img style={{ paddingRight: "5px", borderRadius: "50%" }} src={message.userInfo.avatar} alt="User Avatar" width={"35px"} height={"35px"} />
                                             {
                                                 message.userInfo.verified === true ? <img className="verifiedLogoHomepage" src="/tick.png" /> : ''
                                             }
