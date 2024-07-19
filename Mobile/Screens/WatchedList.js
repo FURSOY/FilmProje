@@ -1,23 +1,20 @@
-import React from 'react';
-import { StyleSheet, View, Text, Image, ScrollView } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { StyleSheet, View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import useHome from '../Hooks/useHome';
+import useWatchList from '../Hooks/useWatchList';
 import { useAuth } from "../Contexts/AuthContext";
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 
-const WatchedList = () => {
-  const { isAuthenticated } = useAuth();
-  const { Messages, loading, refreshMessages } = useHome();
+const WatchList = () => {
+  const [refreshKey, setRefreshKey] = useState(0);
+  const navigation = useNavigation();
+  const { watchedList, WatchedListOperation, WatchListOperation } = useWatchList();
+  const { isAuthenticated, authLoading, loadAuthData } = useAuth();
 
-  useFocusEffect(
-    React.useCallback(() => {
-      refreshMessages();
-    }, [])
-  );
-
-  if (loading) {
+  if (authLoading) {
     return (
       <SafeAreaView style={styles.container}>
         <Header />
@@ -38,7 +35,7 @@ const WatchedList = () => {
     );
   }
 
-  if (!Messages) {
+  if (!isAuthenticated) {
     return (
       <SafeAreaView style={styles.container}>
         <Header />
@@ -48,6 +45,9 @@ const WatchedList = () => {
               <View style={{ backgroundColor: '#d9d9d9', height: 40, justifyContent: 'center', borderTopStartRadius: 15, borderTopEndRadius: 15 }}>
                 <Text style={{ fontWeight: 'bold', fontSize: 22, marginLeft: 20 }}>İzlediklerim Listesi</Text>
               </View>
+              <TouchableOpacity onPress={() => navigation.navigate("login")}>
+                <Text>Giriş Yap</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -69,22 +69,15 @@ const WatchedList = () => {
           <View style={{ backgroundColor: '#d9d9d9', height: 40, justifyContent: 'center', borderTopStartRadius: 15, borderTopEndRadius: 15 }}>
             <Text style={{ fontWeight: 'bold', fontSize: 22, marginLeft: 20 }}>İzlediklerim Listesi</Text>
           </View>
-          <ScrollView style={styles.MessagesContainer}>
-            {Messages.map((message, index) => (
+          <ScrollView style={styles.MessagesContainer} key={refreshKey}>
+            {watchedList.map((film, index) => (
               <View key={index} style={styles.MessageBox}>
-                <Image style={styles.MessageBoxImage} source={{ uri: message.userInfo.avatar }} />
-                {
-                  message.type === "signup" ? (
-                    <Text style={styles.MessageText} numberOfLines={1} ellipsizeMode="tail">
-                      <Text style={{ fontWeight: 'bold' }}>{message.userInfo.name}</Text> hesap oluşturdu
-                    </Text>
-                  ) : (
-                    <Text style={styles.MessageText} numberOfLines={2} ellipsizeMode="tail">
-                      <Text style={{ fontWeight: 'bold' }}>{message.userInfo.name}</Text> {message.filmInfo.originalTitle} filmine <Text style={{ fontWeight: 'bold' }}>{message.rate}</Text> puan verdi
-                    </Text>
-                  )
-                }
-                <Text style={styles.MessageBoxDate}>{formatCreatedAt(message.createdAt)}</Text>
+                <View style={styles.TextView}>
+                  <Image style={styles.MessageBoxImage} source={{ uri: `http://img.omdbapi.com/?apikey=fa0806f5&i=${film.tconst}` }} />
+                  <TouchableOpacity onPress={() => navigation.navigate("home")}>
+                    <Text style={styles.MessageText}>{film.originalTitle}</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             ))}
           </ScrollView>
@@ -114,38 +107,51 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   MessageBox: {
-    borderTopWidth: 2,
+    borderBottomWidth: 2,
     borderColor: '#d9d9d9',
-    height: 65,
+    height: 150,
     alignItems: "center",
     flexDirection: "row",
     position: 'relative',
-    paddingLeft: 15
+    paddingLeft: 15,
+    justifyContent: 'space-between',
+    paddingRight: 15
   },
   MessageBoxImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 96,
+    height: 144,
     marginRight: 10
   },
   MessageText: {
     margin: 0,
-    overflow: "hidden",
-    paddingRight: 60,
-    fontSize: 12,
+    fontSize: 20,
   },
-  MessageBoxDate: {
-    position: "absolute",
-    top: 0,
-    right: 8,
-    fontSize: 10,
-    fontWeight: 'bold'
+  PlusButton: {
+    backgroundColor: 'green',
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10
   },
-  loadingText: {
-    fontSize: 18,
-    marginTop: 20,
-    color: 'gray',
+  NegativeButton: {
+    backgroundColor: 'red',
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    marginTop: 20
   },
+  ButtonView: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  TextView: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  }
 });
 
-export default WatchedList;
+export default WatchList;

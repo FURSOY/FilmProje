@@ -10,10 +10,9 @@ import { showMessage } from "react-native-flash-message";
 
 const Myprofile = () => {
   const navigation = useNavigation();
-  const { isAuthenticated, userData, logout } = useAuth();
-  const { Messages, loading } = useHome();
+  const { isAuthenticated, userData, logout, authLoading } = useAuth();
 
-  if (loading) {
+  if (authLoading) {
     return (
       <SafeAreaView style={styles.container}>
         <Header />

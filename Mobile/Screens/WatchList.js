@@ -1,23 +1,20 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { StyleSheet, View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import useHome from '../Hooks/useHome';
-import { useAuth } from "../Contexts/AuthContext";
-import { useFocusEffect } from '@react-navigation/native';
 import useWatchList from '../Hooks/useWatchList';
-import { useNavigation } from '@react-navigation/native'
+import { useAuth } from "../Contexts/AuthContext";
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 
 const WatchList = () => {
+  const [refreshKey, setRefreshKey] = useState(0);
   const navigation = useNavigation();
-  const { loading, watchList, WatchedListOperation, WatchListOperation } = useWatchList();
-  const { isAuthenticated } = useAuth();
+  const { watchList, WatchedListOperation, WatchListOperation } = useWatchList();
+  const { isAuthenticated, authLoading, loadAuthData } = useAuth();
 
-
-
-  if (loading) {
+  if (authLoading) {
     return (
       <SafeAreaView style={styles.container}>
         <Header />
@@ -72,7 +69,7 @@ const WatchList = () => {
           <View style={{ backgroundColor: '#d9d9d9', height: 40, justifyContent: 'center', borderTopStartRadius: 15, borderTopEndRadius: 15 }}>
             <Text style={{ fontWeight: 'bold', fontSize: 22, marginLeft: 20 }}>İzlenecekler Listesi</Text>
           </View>
-          <ScrollView style={styles.MessagesContainer}>
+          <ScrollView style={styles.MessagesContainer} key={refreshKey}>
             {watchList.map((film, index) => (
               <View key={index} style={styles.MessageBox}>
                 <View style={styles.TextView}>
@@ -82,8 +79,14 @@ const WatchList = () => {
                   </TouchableOpacity>
                 </View>
                 <View style={styles.ButtonView}>
-                  <TouchableOpacity onPress={async () => { await WatchedListOperation(film.tconst, true); }} style={styles.PlusButton}><FontAwesome name="plus" size={24} color="white" /></TouchableOpacity>
-                  <TouchableOpacity onPress={async () => { await WatchListOperation(film.tconst, false); }} style={styles.NegativeButton}><FontAwesome5 name="minus" size={24} color="white" /></TouchableOpacity>
+                  <TouchableOpacity onPress={async () => {
+                    await WatchedListOperation(film.tconst, true);
+                    loadAuthData();
+                  }} style={styles.PlusButton}><FontAwesome name="plus" size={24} color="white" /></TouchableOpacity>
+                  <TouchableOpacity onPress={async () => {
+                    await WatchListOperation(film.tconst, false);
+                    loadAuthData();
+                  }} style={styles.NegativeButton}><FontAwesome5 name="minus" size={24} color="white" /></TouchableOpacity>
                 </View>
               </View>
             ))}
@@ -132,6 +135,10 @@ const styles = StyleSheet.create({
   MessageText: {
     margin: 0,
     fontSize: 20,
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    width: 170
   },
   PlusButton: {
     backgroundColor: 'green',

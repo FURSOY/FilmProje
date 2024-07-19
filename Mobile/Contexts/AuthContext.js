@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
         const userToken = await AsyncStorage.getItem("user_token");
         const storedUserData = await AsyncStorage.getItem("user_data");
 
+        setAuthLoading(true);
         if (userToken) {
             try {
                 const response = await axios.get(`${ServerIp}/api/user/profile`, {
